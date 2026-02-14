@@ -1,6 +1,6 @@
 # Azure-Based-Demand-Forecasting-Capacity-Optimization-System
 About the Project 
-The project focuses on preparing Azure compute and storage usage data for demand forecasting.
+The project focuses on preparing Azure infrastructure usage data for time-series analysis and demand forecasting.
 
 Dataset :
 The project uses a dataset that contains Azure infrastructure usage information such as :
