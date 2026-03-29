@@ -1,79 +1,125 @@
 # Azure-Based-Demand-Forecasting-Capacity-Optimization-System
-About the Project 
-The project focuses on preparing Azure infrastructure usage data for time-series analysis and demand forecasting.
 
-Dataset :
-The project uses a dataset that contains Azure infrastructure usage information such as :
-- timestamp
-- region
-- cpu_usage
-- memory_usage
-- disk_and_network_activity
-- VM configuration
-- cost and utilization
-- external variables like GDP growth and electricity price
-  
-  
-Data Cleaning Steps :
+## About the Project
+This project focuses on analyzing Azure infrastructure usage data and predicting future demand. The main goal is to support capacity planning using machine learning and automation.
 
-The preprocessing script performs the following steps:
-1.Loads the raw dataset
-2.Converts timestamp into datetime format
-3.Sorts data for time-series analysis
-4.Handles missing numeric values using interpolation and median
-5.Handles missing categorical values using mode
-6.Standardizes region names into cloud region codes
-7.Removes duplicate records
-8.Saves the cleaned dataset
+---
 
-Output :
-After preprocessing, a cleaned dataset is generated:
-azure_cleaned_dataset.csv
+## Dataset
+The dataset includes:
+- timestamp  
+- region  
+- cpu usage  
+- memory usage  
+- disk and network activity  
+- VM configuration  
+- cost and utilization  
+- external factors like GDP growth and electricity price  
 
-Feature Engineering :
+---
 
-After cleaning the dataset, additional features were created to help the models capture usage patterns.
+## Data Cleaning
+The data was cleaned using the following steps:
+- Converted timestamp into datetime format  
+- Sorted data for time series  
+- Handled missing values (numeric → interpolation, categorical → mode)  
+- Standardized region names  
+- Removed duplicate records  
 
-- Time-based features such as hour, day_of_week, and is_weekend were extracted from the timestamp.
-- Lag features (target_lag_1 and target_lag_24) were created to represent previous demand values.
-- A rolling_mean feature was calculated over 24 hours to capture short-term demand trends.
-- A spike_flag feature was created to identify sudden spikes in demand.
-- Categorical columns like region, vm_type, and cloud_provider were converted to numeric form using one-hot encoding.
-- Rows with missing values created during lag and rolling calculations were removed.
+### Output:
+- `azure_cleaned_dataset.csv`
 
+---
 
-Output :
-The processed dataset used for model training was saved as:
-feature_eng_dataset.csv
+## Feature Engineering
+New features were created to improve model performance:
+- Time features: hour, day_of_week, is_weekend  
+- Lag features: previous demand values (target_lag_1, target_lag_24)  
+- Rolling mean to capture short-term trends  
+- Spike flag to detect sudden increases  
+- One-hot encoding for region, vm_type, and cloud_provider  
 
+### Output:
+- `feature_eng_dataset.csv`
 
-Model Training :
-Two forecasting models were implemented:
-- ARIMA – a time-series model that predicts demand using historical target values.
-- XGBoost – a machine learning model that uses engineered features to predict demand.
-The dataset was split into training and testing sets while maintaining the time order of the data.
+---
 
-Models were evaluated using the following metrics:
-- MAE (Mean Absolute Error)
-- RMSE (Root Mean Square Error)
-- Forecast Bias
-Hyperparameter tuning was applied to the XGBoost model using GridSearchCV, and rolling validation was used for backtesting.
+## Model Training
+Two models were used:
+- ARIMA (time series model)  
+- XGBoost (machine learning model)  
 
+Evaluation metrics:
+- MAE  
+- RMSE  
+- Bias  
 
-Model Comparison :
-ARIMA Results
-- MAE : 15.75
-- RMSE : 19.97
-- Bias : -12.83
+Hyperparameter tuning was done using GridSearchCV.
 
-XGBoost Results
-- MAE : 3.95
-- RMSE : 6.00
-- Bias : 0.23
+XGBoost performed better, so it was selected as the final model.
 
-XGBoost showed significantly lower error values and a bias close to zero, indicating more accurate and balanced predictions. Therefore, XGBoost was selected as the final model for demand forecasting.
+---
 
-Final Output :
-- Cleaned dataset : azure_cleaned_dataset.csv  
-- Feature engineered dataset : feature_eng_dataset.csv  
-- Forecasting models : ARIMA and XGBoost
+## Model Results
+
+### ARIMA
+- MAE: 15.75  
+- RMSE: 19.97  
+- Bias: -12.83  
+
+### XGBoost
+- MAE: 3.95  
+- RMSE: 6.00  
+- Bias: 0.23  
+
+---
+
+## API (Real-Time Prediction)
+The model is deployed using Flask API.
+
+- Endpoint: `/predict`  
+- Accepts input features  
+- Returns predicted demand  
+
+---
+
+## Batch Prediction
+A script (`predict.py`) is used to generate predictions and save them into:
+- `forecast_output.csv`
+
+---
+
+## Dashboard
+The forecast data is used to create dashboards (Excel / Power BI) showing:
+- Actual vs Forecast trends  
+- Demand patterns  
+- Region-wise demand  
+
+---
+
+## Automation
+A scheduler script is used to:
+- Run predictions automatically at regular intervals  
+- Update forecast output  
+- Log execution time and status  
+
+---
+
+## Monitoring & Retraining
+Model performance is monitored using RMSE:
+- RMSE is calculated after predictions  
+- If error increases, retraining can be triggered  
+- New model replaces old model only if performance improves  
+
+---
+
+## Final Output
+- Cleaned dataset → `azure_cleaned_dataset.csv`  
+- Feature dataset → `feature_eng_dataset.csv`  
+- Forecast output → `forecast_output.csv`  
+- Model file → `model.pkl`  
+
+---
+
+## Conclusion
+This project builds a complete pipeline from data preprocessing to prediction, deployment, and monitoring. It helps in understanding demand patterns and supports better infrastructure capacity planning.
