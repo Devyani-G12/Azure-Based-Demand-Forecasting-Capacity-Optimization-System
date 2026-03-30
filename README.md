@@ -114,10 +114,10 @@ Model performance is monitored using RMSE:
 ---
 
 ## Final Output
-- Cleaned dataset → `azure_cleaned_dataset.csv`  
-- Feature dataset → `feature_eng_dataset.csv`  
-- Forecast output → `forecast_output.csv`  
-- Model file → `model.pkl`  
+- Cleaned dataset : `azure_cleaned_dataset.csv`  
+- Feature dataset : `feature_eng_dataset.csv`  
+- Forecast output : `forecast_output.csv`  
+- Model file : `model.pkl`  
 
 ---
 
