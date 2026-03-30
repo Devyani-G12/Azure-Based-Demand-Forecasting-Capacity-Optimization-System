@@ -1,125 +1,45 @@
-# Azure-Based-Demand-Forecasting-Capacity-Optimization-System
+Azure-Based Demand Forecasting & Capacity Optimization System
+About the Project
 
-## About the Project
-This project focuses on analyzing Azure infrastructure usage data and predicting future demand. The main goal is to support capacity planning using machine learning and automation.
+This project is about analyzing Azure usage data and predicting future demand. The main goal is to understand how resources are used and estimate future needs so that capacity can be managed better.
 
----
+Dataset
 
-## Dataset
 The dataset includes:
-- timestamp  
-- region  
-- cpu usage  
-- memory usage  
-- disk and network activity  
-- VM configuration  
-- cost and utilization  
-- external factors like GDP growth and electricity price  
 
----
+Timestamp
+Region
+CPU usage
+Memory usage
+Disk and network activity
+VM configuration
+Cost and utilization
+External factors like GDP and electricity price
+Data Cleaning
 
-## Data Cleaning
-The data was cleaned using the following steps:
-- Converted timestamp into datetime format  
-- Sorted data for time series  
-- Handled missing values (numeric → interpolation, categorical → mode)  
-- Standardized region names  
-- Removed duplicate records  
+The dataset was cleaned by handling missing values and removing unnecessary data. Some columns were also formatted properly for easier analysis.
 
-### Output:
-- `azure_cleaned_dataset.csv`
+Feature Engineering
 
----
+New features were created like day, month, and usage trends from timestamp data. This helped in improving the prediction.
 
-## Feature Engineering
-New features were created to improve model performance:
-- Time features: hour, day_of_week, is_weekend  
-- Lag features: previous demand values (target_lag_1, target_lag_24)  
-- Rolling mean to capture short-term trends  
-- Spike flag to detect sudden increases  
-- One-hot encoding for region, vm_type, and cloud_provider  
+Model Used
 
-### Output:
-- `feature_eng_dataset.csv`
+In this project, simple machine learning models like Linear Regression and time-series methods were used. The model was trained on past usage data to predict future demand.
 
----
+Model Evaluation
 
-## Model Training
-Two models were used:
-- ARIMA (time series model)  
-- XGBoost (machine learning model)  
+The model performance was checked using basic metrics like:
 
-Evaluation metrics:
-- MAE  
-- RMSE  
-- Bias  
+Mean Absolute Error (MAE)
+Mean Squared Error (MSE)
 
-Hyperparameter tuning was done using GridSearchCV.
+These metrics helped to understand how accurate the predictions are.
 
-XGBoost performed better, so it was selected as the final model.
+Results
 
----
+The model was able to predict future resource usage with reasonable accuracy. It showed trends of increasing or decreasing demand over time. This can help in planning resources in advance and reducing wastage.
 
-## Model Results
+Conclusion
 
-### ARIMA
-- MAE: 15.75  
-- RMSE: 19.97  
-- Bias: -12.83  
-
-### XGBoost
-- MAE: 3.95  
-- RMSE: 6.00  
-- Bias: 0.23  
-
----
-
-## API (Real-Time Prediction)
-The model is deployed using Flask API.
-
-- Endpoint: `/predict`  
-- Accepts input features  
-- Returns predicted demand  
-
----
-
-## Batch Prediction
-A script (`predict.py`) is used to generate predictions and save them into:
-- `forecast_output.csv`
-
----
-
-## Dashboard
-The forecast data is used to create dashboards (Excel / Power BI) showing:
-- Actual vs Forecast trends  
-- Demand patterns  
-- Region-wise demand  
-
----
-
-## Automation
-A scheduler script is used to:
-- Run predictions automatically at regular intervals  
-- Update forecast output  
-- Log execution time and status  
-
----
-
-## Monitoring & Retraining
-Model performance is monitored using RMSE:
-- RMSE is calculated after predictions  
-- If error increases, retraining can be triggered  
-- New model replaces old model only if performance improves  
-
----
-
-## Final Output
-- Cleaned dataset : `azure_cleaned_dataset.csv`  
-- Feature dataset : `feature_eng_dataset.csv`  
-- Forecast output : `forecast_output.csv`  
-- Model file : `model.pkl`  
-
----
-
-## Conclusion
-This project builds a complete pipeline from data preprocessing to prediction, deployment, and monitoring. It helps in understanding demand patterns and supports better infrastructure capacity planning.
+This project shows how machine learning can be useful in cloud capacity planning. With better models and more data, the predictions can be improved further.
